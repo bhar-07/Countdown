@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>Countdown Page</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: #ffffff;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 80%;
+            padding: 15px 25px;
+        }
+
+        .company-logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .company-logo img {
+            margin-right: 8px;
+        }
+
+        .device-number,
+        .operator {
+            margin-left: 20px;
+        }
+
+        .start-button,
+        .stop-button {
+            padding: 10px 20px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .start-button {
+            background-color: #4CAF50;
+            margin-right: 10px;
+        }
+
+        .stop-button {
+            background-color: red;
+            margin-top: 20px;
+        }
+
+        .content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 80%;
+            background-color: #ededed;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .date-picker {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .circular {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            transform: translate(-20%, -12%);
+        }
+
+        .outer {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            padding: 15px;
+            background: conic-gradient(rgb(76, 175, 80) 100%, rgb(255, 255, 255) 100%, rgb(255, 255, 255) 100%);
+        }
+
+        .inner {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            background: #ededed;
+        }
+
+        svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        circle {
+            fill: none;
+            stroke-width: 15px;
+            stroke-dasharray: 320;
+            animation: anim 2s linear forwards;
+        }
+
+        .text-info {
+            color: #22dcfa !important;
+        }
+
+        .number {
+            font-weight: 600;
+            font-size: 2rem;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .device-number {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .select-dropdown {
+            background-color: #E6E6E6;
+            border-radius: 4px;
+        }
+
+        .select-dropdown select {
+            font-size: 1rem;
+            font-weight: normal;
+            max-width: 100%;
+            padding: 8px 24px 8px 10px;
+            border: none;
+            background-color: transparent;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        .select-dropdown select:active,
+        .select-dropdown select:focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+        .select-dropdown:after {
+            width: 0;
+            height: 0;
+            margin-top: -2px;
+            border-top: 5px solid #aaa;
+            border-right: 5px solid transparent;
+            border-left: 5px solid transparent;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="company-logo">
+                <span>Firma</span> &nbsp;
+                <img src="https://via.placeholder.com/80x40" alt="Company Logo">
+            </div>
+            <div class="device-number">
+                <label for="device"><i class="far fa-file-alt"></i>&nbsp;&nbsp;Gerätenummer:</label>
+                <div class="select-dropdown">
+                    <select>
+                        <option value="1">371845</option>
+                        <option value="2">175504</option>
+                        <option value="3">448018</option>
+                    </select>
+                </div>
+            </div>
+            <div class="device-number">
+                <label for="operator"><i class="fas fa-user"></i>&nbsp;&nbsp;Bediener:</label>
+                <div class="select-dropdown">
+                    <select>
+                        <option value="1">Kavin</option>
+                        <option value="2">Alousis</option>
+                        <option value="3">Anand</option>
+                    </select>
+                </div>
+            </div>
+            <button class="start-button" id="start-button">START</button>
+        </div>
+
+        <div class="content">
+            <div class="date-picker">
+                <label for="date"><i class="far fa-calendar-alt"></i>&nbsp;&nbsp;Datum:</label>
+                <input type="date" id="date" value="2024-10-01">
+            </div>
+            <div class="circular">
+                <div class="outer timer-circle">
+                    <div class="inner">
+                        <div class="number"><span class="mc_oee" id="timer">01:00</span></div>
+                    </div>
+                </div>
+                <svg width="120px" height="120px">
+                    <circle cx="59.6" cy="59.5" r="52.4" stroke-linecap="round" class="mc_oee_circle"></circle>
+                </svg>
+            </div>
+            <div class="time-display">
+                <div class="start-time">
+                    <label><i class="far fa-clock"></i>&nbsp;&nbsp;Anfangszeit:</label>
+                    <span id="start-time">01:18:43 PM</span>
+                </div>
+                <div class="end-time">
+                    <label><i class="far fa-clock"></i>&nbsp;&nbsp;Endzeit:</label>
+                    <span id="end-time">--:--</span>
+                </div>
+                <button class="stop-button" id="stop-button">STOP</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        let initialTime = 59, countdownTime = initialTime, countdownInterval;
+        const $timer = $('#timer'),
+            $start = $('#start-button'), $stop = $('#stop-button'),
+            $startTime = $('#start-time'), $endTime = $('#end-time'),
+            $timerCircle = $('.timer-circle');
+
+        $start.on('click', () => {
+            clearInterval(countdownInterval);
+            countdownTime = initialTime;
+            startCountdown();
+        });
+
+        $stop.on('click', () => clearInterval(countdownInterval) || $endTime.text(new Date().toLocaleTimeString()));
+
+        function startCountdown() {
+            $startTime.text(new Date().toLocaleTimeString());
+            countdownInterval = setInterval(() => updateCountdown(), 1000);
+        }
+
+        function updateCountdown() {
+            const minutes = Math.floor(countdownTime / 60),
+                seconds = countdownTime % 60,
+                percentage = (countdownTime / initialTime) * 100;
+            $timer.text(`${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`);
+            updateTimerCircle(percentage);
+            countdownTime-- <= 0 && (clearInterval(countdownInterval), $endTime.text(new Date().toLocaleTimeString()));
+        }
+
+        function updateTimerCircle(percentage) {
+            const radians = ((percentage / 100) * 360 - 90) * (Math.PI / 180),
+                x = 75 + 75 * Math.cos(radians), y = 75 + 75 * Math.sin(radians);
+            $('.mc_oee_circle').css({ left: `${x}px`, top: `${y}px` });
+            $timerCircle.css('background', `conic-gradient(#4CAF50 ${percentage}%, #ddd ${percentage}% 100%)`);
+        }
+    </script>
+</body>
+
+</html>
